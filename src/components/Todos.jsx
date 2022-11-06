@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import "./todos.css";
 import Todo from "./Todo";
-let todoC = [];
+
 const Todos = () => {
-  const [todo, setTodo] = useState(todoC);
+  const [todo, setTodo] = useState([]);
   const [value, setValue] = useState("");
 
   const handleAdd = (e) => {
     e.preventDefault();
-    todoC.push(value);
-    setTodo(todoC);
+
+    setTodo([...todo, value]);
     clear();
   };
-  const handleDelete = (i) => {
-    todoC.splice(i, 1);
-    setTodo(todoC);
+  const handleDelete = (index) => {
+    const newTodo = todo.filter((elem, id) => id !== index);
+    setTodo(newTodo);
     clear();
   };
   const clear = () => {
@@ -33,9 +33,9 @@ const Todos = () => {
         <button onClick={handleAdd}> Add </button>
       </div>
       <div className="todo__todos">
-        {todo.map((t, i) => (
-          <div key={i} onClick={() => handleDelete(i)}>
-            <Todo todo={t} todoValues={todoC} handleAdd={handleAdd} />
+        {todo.map((t, index) => (
+          <div key={index} onClick={() => handleDelete(index)}>
+            <Todo todo={t} />
           </div>
         ))}
       </div>
